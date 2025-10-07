@@ -1,9 +1,14 @@
 class DevicesController < ApplicationController
+  before_action :find_device_by_token, only: [:create]
 
   def create
     begin
-      device = RegisterDeviceService.call(device_key, device_params)
-      render json: { message: "Device created successfully", device: device }, status: :created
+      result = RegisterDeviceService.call(device: current_device, device_params: device_params)
+      render json: { 
+        message: "Device registered successfully", 
+        device: { id: result[:device].id, external_id: result[:device].external_id },
+        token: result[:token] 
+      }, status: :created
     rescue ::DeviceServiceError => e
       render json: { error: e.message }, status: :unprocessable_entity
     rescue ::DeviceServiceErrorInternal => e
