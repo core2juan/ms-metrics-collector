@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  external_id: MyString
+  description: MyString
+  ip_address: MyString
+  encrypted_key: MyString
+
+two:
+  external_id: MyString
+  description: MyString
+  ip_address: MyString
+  encrypted_key: MyString
