@@ -1,5 +1,6 @@
 class Device < ApplicationRecord
   has_many :sensors, dependent: :destroy
+  has_many :device_status_metrics, dependent: :destroy
 
   validates :external_id, presence: true, uniqueness: true
   validates :description, presence: true

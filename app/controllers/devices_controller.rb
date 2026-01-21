@@ -1,5 +1,6 @@
 class DevicesController < ApplicationController
   before_action :find_device_by_token, only: [:create]
+  before_action :authenticate_device!, only: [:status]
 
   def create
     begin
@@ -16,9 +17,23 @@ class DevicesController < ApplicationController
     end
   end
 
+  def status
+    status_metric = current_device.device_status_metrics.new(status_params)
+
+    if status_metric.save
+      render json: { message: "Status recorded successfully" }, status: :created
+    else
+      render json: { error: status_metric.errors.full_messages.join(", ") }, status: :unprocessable_content
+    end
+  end
+
   private
 
   def device_params
     params.permit(:id, :description)
+  end
+
+  def status_params
+    params.permit(:timestamp, metrics: {})
   end
 end

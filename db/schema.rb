@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_11_230623) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_21_203905) do
+  create_table "device_status_metrics", force: :cascade do |t|
+    t.integer "device_id", null: false
+    t.json "metrics", default: {}, null: false
+    t.float "timestamp", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["device_id", "timestamp"], name: "index_device_status_metrics_on_device_id_and_timestamp"
+    t.index ["device_id"], name: "index_device_status_metrics_on_device_id"
+    t.index ["timestamp"], name: "index_device_status_metrics_on_timestamp"
+  end
+
   create_table "devices", force: :cascade do |t|
     t.string "external_id"
     t.string "description"
@@ -43,6 +54,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_11_230623) do
     t.index ["type"], name: "index_sensors_on_type"
   end
 
+  add_foreign_key "device_status_metrics", "devices"
   add_foreign_key "metrics", "sensors"
   add_foreign_key "sensors", "devices"
 end
