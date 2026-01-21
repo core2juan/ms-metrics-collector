@@ -13,7 +13,7 @@ class MetricsController < ApplicationController
       count = CreateMetricsService.call(device: current_device, metrics: metrics_data)
       render json: { message: "#{count} metrics created successfully" }, status: :created
     rescue MetricsServiceError => e
-      render json: { error: e.message }, status: :unprocessable_entity
+      render json: { error: e.message }, status: :unprocessable_content
     rescue MetricsServiceErrorInternal => e
       render json: { error: "Internal server error" }, status: :internal_server_error
     end

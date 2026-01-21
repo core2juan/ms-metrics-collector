@@ -10,7 +10,7 @@ class DevicesController < ApplicationController
         token: result[:token] 
       }, status: :created
     rescue ::DeviceServiceError => e
-      render json: { error: e.message }, status: :unprocessable_entity
+      render json: { error: e.message }, status: :unprocessable_content
     rescue ::DeviceServiceErrorInternal => e
       render json: { error: "Internal server error" }, status: :internal_server_error
     end
